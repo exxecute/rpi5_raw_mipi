@@ -16,19 +16,19 @@ mkdir -p mnt/boot
 mkdir -p mnt/root
 
 # Mount sd_card
-mount /dev/$SD_CARD1 mnt/boot
-mount /dev/$SD_CARD2 mnt/root
+sudo mount /dev/sdc1 mnt/boot
+sudo mount /dev/sdc2 mnt/root
 
 # Install the kernel modules onto the boot media
-env PATH=$PATH make -j12 ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- INSTALL_MOD_PATH=mnt/root modules_install
+sudo env PATH=$PATH make -j12 ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- INSTALL_MOD_PATH=mnt/root modules_install
 
 # Backup image of the current kernel, install the fresh kernel image, overlays, README
-cp mnt/boot/$KERNEL.img mnt/boot/$KERNEL-backup.img
-cp arch/arm64/boot/Image mnt/boot/$KERNEL.img
-cp arch/arm64/boot/dts/broadcom/*.dtb mnt/boot/
-cp arch/arm64/boot/dts/overlays/*.dtb* mnt/boot/overlays/
-cp arch/arm64/boot/dts/overlays/README mnt/boot/overlays/
+sudo cp mnt/boot/$KERNEL.img mnt/boot/$KERNEL-backup.img
+sudo cp arch/arm64/boot/Image mnt/boot/$KERNEL.img
+sudo cp arch/arm64/boot/dts/broadcom/*.dtb mnt/boot/
+sudo cp arch/arm64/boot/dts/overlays/*.dtb* mnt/boot/overlays/
+sudo cp arch/arm64/boot/dts/overlays/README mnt/boot/overlays/
 
 # Umount sd_card
-umount mnt/boot
-umount mnt/root
+sudo umount mnt/boot
+sudo umount mnt/root
