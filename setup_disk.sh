@@ -16,8 +16,8 @@ mkdir -p mnt/boot
 mkdir -p mnt/root
 
 # Mount sd_card
-mount /dev/sdb1 mnt/boot
-mount /dev/sdb2 mnt/root
+mount /dev/$SD_CARD1 mnt/boot
+mount /dev/$SD_CARD2 mnt/root
 
 # Install the kernel modules onto the boot media
 env PATH=$PATH make -j12 ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- INSTALL_MOD_PATH=mnt/root modules_install
