@@ -1112,6 +1112,7 @@ error_out:
 
 static int imx219_probe(struct i2c_client *client)
 {
+	printk("RAW MIPI PROBE!!!!\r\n");
 	struct device *dev = &client->dev;
 	struct imx219 *imx219;
 	int ret;
@@ -1269,7 +1270,7 @@ static const struct dev_pm_ops imx219_pm_ops = {
 
 static struct i2c_driver imx219_i2c_driver = {
 	.driver = {
-		.name = "imx219",
+		.name = "raw_mipi",
 		.of_match_table	= imx219_dt_ids,
 		.pm = &imx219_pm_ops,
 	},

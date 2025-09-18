@@ -15,7 +15,8 @@ mkdir -p mnt
 mkdir -p mnt/boot
 mkdir -p mnt/root
 
-# Mount sd_card
+# Mount sd_card 
+# TODO: fix it
 sudo mount /dev/sdc1 mnt/boot
 sudo mount /dev/sdc2 mnt/root
 
