@@ -56,11 +56,11 @@ MODULE_PARM_DESC(verbose_debug, "verbose debugging messages");
 #define cfe_dbg_verbose(fmt, arg...)                          \
 	do {                                                  \
 		if (cfe_debug_verbose)                        \
-			dev_dbg(&cfe->pdev->dev, fmt, ##arg); \
+			printk(fmt, ##arg); \
 	} while (0)
-#define cfe_dbg(fmt, arg...) dev_dbg(&cfe->pdev->dev, fmt, ##arg)
-#define cfe_info(fmt, arg...) dev_info(&cfe->pdev->dev, fmt, ##arg)
-#define cfe_err(fmt, arg...) dev_err(&cfe->pdev->dev, fmt, ##arg)
+#define cfe_dbg(fmt, arg...) printk(fmt, ##arg)
+#define cfe_info(fmt, arg...) printk(fmt, ##arg)
+#define cfe_err(fmt, arg...) printk(fmt, ##arg)
 
 /* MIPICFG registers */
 #define MIPICFG_CFG		0x004

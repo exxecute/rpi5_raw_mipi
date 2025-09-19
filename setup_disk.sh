@@ -24,8 +24,8 @@ mkdir -p mnt/root
 
 # Mount sd_card 
 # TODO: fix it
-sudo mount /dev/sdc1 mnt/boot
-sudo mount /dev/sdc2 mnt/root
+sudo mount /dev/sdd1 mnt/boot
+sudo mount /dev/sdd2 mnt/root
 
 # Install the kernel modules onto the boot media
 sudo env PATH=$PATH make -j12 ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- INSTALL_MOD_PATH=mnt/root modules_install
