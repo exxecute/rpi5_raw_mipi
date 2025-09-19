@@ -1,8 +1,15 @@
 #!/usr/bin/env bash
 
+# defconfig for RPI5
+# make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- bcm2712_defconfig
+# Build
+# make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- Image modules dtbs -j8
+# make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j8
+# rm Img
+# rm arch/arm64/boot/Image
+
 echo "Setting up image for RPI5 64-bit!"
 
-KERNEL=kernel_2712
 
 if [[ -v SD_CARD ]]; then
     echo '[OK]: SD_CARD sourced "$SD_CARD"'
@@ -24,11 +31,15 @@ sudo mount /dev/sdc2 mnt/root
 sudo env PATH=$PATH make -j12 ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- INSTALL_MOD_PATH=mnt/root modules_install
 
 # Backup image of the current kernel, install the fresh kernel image, overlays, README
+KERNEL=kernel_2712
 sudo cp mnt/boot/$KERNEL.img mnt/boot/$KERNEL-backup.img
 sudo cp arch/arm64/boot/Image mnt/boot/$KERNEL.img
 sudo cp arch/arm64/boot/dts/broadcom/*.dtb mnt/boot/
 sudo cp arch/arm64/boot/dts/overlays/*.dtb* mnt/boot/overlays/
 sudo cp arch/arm64/boot/dts/overlays/README mnt/boot/overlays/
+
+# !!!
+sync
 
 # Umount sd_card
 sudo umount mnt/boot

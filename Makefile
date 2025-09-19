@@ -2067,10 +2067,6 @@ kernelversion:
 image_name:
 	@echo $(KBUILD_IMAGE)
 
-build_kernel:
-	@make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- bcm2712_defconfig
-	@make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- Image modules dtbs -j8
-
 PHONY += run-command
 run-command:
 	$(Q)$(KBUILD_RUN_COMMAND)

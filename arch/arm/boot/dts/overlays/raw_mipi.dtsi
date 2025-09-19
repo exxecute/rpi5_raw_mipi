@@ -1,6 +1,6 @@
 // Fragment that configures an virtual raw camera with 4 mipi lines
 
-cam_node: raw_mipi@11 {
+cam_node: raw_mipi@10 {
 	compatible = "raw,4-line";
 	reg = <0x10>;
 	status = "disabled";
