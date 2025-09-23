@@ -11,26 +11,29 @@
 echo "Setting up image for RPI5 64-bit!"
 
 
-if [[ -v SD_CARD ]]; then
-    echo '[OK]: SD_CARD sourced "$SD_CARD"'
-else
-    echo '[ERROR]: Source SD_CARD (export SD_CARD="/dev/sdxxx")'
-fi
+# if [[ -v SD_CARD ]]; then
+#     echo '[OK]: SD_CARD sourced "$SD_CARD"'
+# else
+#     echo '[ERROR]: Source SD_CARD (export SD_CARD="/dev/sdxxx")'
+# fi
 
-# create mnt dir
-mkdir -p mnt
-mkdir -p mnt/boot
-mkdir -p mnt/root
+# # create mnt dir
+# mkdir -p mnt
+# mkdir -p mnt/boot
+# mkdir -p mnt/root
 
 # Mount sd_card 
 # TODO: fix it
-sudo mount /dev/sdd1 mnt/boot
-sudo mount /dev/sdd2 mnt/root
+echo Mount devices...
+sudo mount /dev/sdc1 mnt/boot
+sudo mount /dev/sdc2 mnt/root
 
 # Install the kernel modules onto the boot media
+echo Installing the kernel modules onto the boot media...
 sudo env PATH=$PATH make -j12 ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- INSTALL_MOD_PATH=mnt/root modules_install
 
 # Backup image of the current kernel, install the fresh kernel image, overlays, README
+echo Backup image of the current kernel, install the fresh kernel image, overlays, README...
 KERNEL=kernel_2712
 sudo cp mnt/boot/$KERNEL.img mnt/boot/$KERNEL-backup.img
 sudo cp arch/arm64/boot/Image mnt/boot/$KERNEL.img
@@ -42,5 +45,6 @@ sudo cp arch/arm64/boot/dts/overlays/README mnt/boot/overlays/
 sync
 
 # Umount sd_card
+echo Umount sd_card
 sudo umount mnt/boot
 sudo umount mnt/root

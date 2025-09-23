@@ -140,7 +140,7 @@
 
 #define IMX219_DEFAULT_LINK_FREQ	456000000
 #define IMX219_DEFAULT_LINK_FREQ_4LANE_UNSUPPORTED	363000000
-#define IMX219_DEFAULT_LINK_FREQ_4LANE	364000000
+#define IMX219_DEFAULT_LINK_FREQ_4LANE	200000000
 
 /* IMX219 native and active pixel array size. */
 #define IMX219_NATIVE_WIDTH			640U
@@ -272,9 +272,10 @@ static const char * const imx219_supply_name[] = {
  * - v flip
  * - h&v flips
  */
-#define MEDIA_BUS_FMT_META_8 0x8001
 static const u32 imx219_mbus_formats[] = {
-	MEDIA_BUS_FMT_META_8
+	MEDIA_BUS_FMT_SRGGB8_1X8,
+	MEDIA_BUS_FMT_SRGGB16_1X16,
+	
 };
 
 /*
@@ -310,6 +311,24 @@ static const struct imx219_mode supported_modes[] = {
 		/* Edit for your resolution 640x512 30fps mode */
 		.width = 640,
 		.height = 512,
+		.vts_def = 1763,
+	},
+	{
+		/* Edit for your resolution 640x512 30fps mode */
+		.width = 1280,
+		.height = 1024,
+		.vts_def = 1763,
+	},
+	{
+		/* Edit for your resolution 640x512 30fps mode */
+		.width = 1280,
+		.height = 512,
+		.vts_def = 1763,
+	},
+	{
+		/* Edit for your resolution 640x512 30fps mode */
+		.width = 640,
+		.height = 1024,
 		.vts_def = 1763,
 	},
 };
@@ -604,22 +623,23 @@ static int imx219_set_framefmt(struct imx219 *imx219,
 	format = v4l2_subdev_state_get_format(state, 0);
 	crop = v4l2_subdev_state_get_crop(state, 0);
 
-	switch (format->code) {
-	case MEDIA_BUS_FMT_SRGGB8_1X8:
-	case MEDIA_BUS_FMT_SGRBG8_1X8:
-	case MEDIA_BUS_FMT_SGBRG8_1X8:
-	case MEDIA_BUS_FMT_SBGGR8_1X8:
-		bpp = 8;
-		break;
+	// switch (format->code) {
+	// case MEDIA_BUS_FMT_SRGGB8_1X8:
+	// case MEDIA_BUS_FMT_SGRBG8_1X8:
+	// case MEDIA_BUS_FMT_SGBRG8_1X8:
+	// case MEDIA_BUS_FMT_SBGGR8_1X8:
+	// 	bpp = 8;
+	// 	break;
 
-	case MEDIA_BUS_FMT_SRGGB10_1X10:
-	case MEDIA_BUS_FMT_SGRBG10_1X10:
-	case MEDIA_BUS_FMT_SGBRG10_1X10:
-	case MEDIA_BUS_FMT_SBGGR10_1X10:
-	default:
-		bpp = 10;
-		break;
-	}
+	// case MEDIA_BUS_FMT_SRGGB10_1X10:
+	// case MEDIA_BUS_FMT_SGRBG10_1X10:
+	// case MEDIA_BUS_FMT_SGBRG10_1X10:
+	// case MEDIA_BUS_FMT_SBGGR10_1X10:
+	// default:
+	// 	bpp = 10;
+	// 	break;
+	// }
+	bpp = 8;
 
 	// cci_write(imx219->regmap, IMX219_REG_X_ADD_STA_A,
 	// 	  crop->left - IMX219_PIXEL_ARRAY_LEFT, &ret);
@@ -796,10 +816,10 @@ static int imx219_enum_mbus_code(struct v4l2_subdev *sd,
 	printk("[raw mipi]: %s\r\n", __func__);
 	struct imx219 *imx219 = to_imx219(sd);
 
-	if (code->index >= (ARRAY_SIZE(imx219_mbus_formats) / 4))
+	if (code->index >= (ARRAY_SIZE(imx219_mbus_formats)))
 		return -EINVAL;
 
-	code->code = imx219_get_format_code(imx219, imx219_mbus_formats[code->index * 4]);
+	code->code = imx219_get_format_code(imx219, imx219_mbus_formats[code->index]);
 
 	return 0;
 }

@@ -57,8 +57,8 @@
 				csi_ep: endpoint {
 					remote-endpoint = <&cam_endpoint>;
 					clock-lanes = <0>;
-					data-lanes = <1 2>;
-					clock-noncontinuous;
+					data-lanes = <1 2 3 4>;
+					clock-continuous;
 				};
 			};
 		};
@@ -83,7 +83,7 @@
 		__dormant__ {
 			data-lanes = <1 2 3 4>;
 			link-frequencies =
-					/bits/ 64 <363000000>;
+					/bits/ 64 <200000000>;
 		};
 	};
 

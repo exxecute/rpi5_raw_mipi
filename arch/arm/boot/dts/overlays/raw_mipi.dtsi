@@ -19,7 +19,7 @@ cam_node: raw_mipi@10 {
 		cam_endpoint: endpoint {
 			clock-lanes = <0>;
 			data-lanes = <1 2 3 4>;
-			clock-noncontinuous;
+			clock-continuous;
 			link-frequencies =
 				/bits/ 64 <200000000>;
 		};
