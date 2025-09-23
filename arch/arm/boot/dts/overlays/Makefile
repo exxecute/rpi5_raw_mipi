@@ -358,7 +358,9 @@ dtbo-$(CONFIG_ARCH_BCM2835) += \
 	wifimac.dtbo \
 	wittypi.dtbo \
 	wm8960-soundcard.dtbo \
-	ws2812-pio.dtbo
+	ws2812-pio.dtbo \
+	custom_imx219.dtbo \
+	raw_mipi.dtbo
 
 targets += dtbs dtbs_install
 targets += $(dtbo-y)
